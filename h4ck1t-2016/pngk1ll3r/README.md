@@ -28,4 +28,4 @@ I used the following steps to solve this challenge:
 
 3. The only CRC error left at this point was in IHDR chunk. By looking at pngcheck output I could see that the size of the image itself was set to 13x37. There was that '1337' again. Pngcheck told me that the expected CRC of IHDR field was 441f81d8. I assumed that the CRC is correct. Therefore, the correct width and length of the image would be those that produce the expected CRC. I used a short brute-force script to find the correct image size: 551 x 196. After correcting the width and height, I was able to open the file and get the flag.
 
-![h4ck1t{st4rb0und_r3c0v3ry_m1$$ion}](https://github.com/Migdalo/writeups/blob/master/img/h4ck1t-2016/task.png)
+![h4ck1t{st4rb0und_r3c0v3ry_m1$$ion}](https://github.com/Migdalo/writeups/blob/master/h4ck1t-2016/pngk1ll3r/task.png)
