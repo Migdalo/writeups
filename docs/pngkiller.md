@@ -3,7 +3,7 @@
 
 >The order from the central management has arrived, but.. We can't open it. And if we don't make it, then we don't get the info about further plans of the command team. But only not in your shift! Fix the file and get the deserved promotion.
 
-The file we got with the task seems to be a png file.
+The file we got with the task is a png file. However, it can't be opened.
 
 About [PNG](https://www.w3.org/TR/PNG/) files:
 * The signature of PNG file is *89 50 4e 47 0d 0a 1a 0a*
