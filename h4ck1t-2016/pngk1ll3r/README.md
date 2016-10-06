@@ -22,7 +22,7 @@ I used the following steps to solve this challenge:
   1. The iTXt field didn't include anything useful so instead of fixing the chunk length, I deleted the chunk.
   2. Doing a string search looking for IDAT chunk revealed that the file has three IDAT chunks. Their chunk lengths were 01, 21 and 07 (1, 33 and 7 in decimals). Because there was that '1337' again, I knew that I was on the right track, and all of the IDAT chunks most likely had a wrong chunk length. 
     * IDAT strings were located at positions 0x00000076 (= 118), 0x00004082 (= 16514) and 0x0000808e (= 32910). To know the correct length of the third IDAT chunk I also needed to know the position of IEND string. I found it with a string search at 0x0000880d (= 34829).
-    * To get the correct chunk data length, I counted the distance between subsequent chunks. This was easily done by counting the distance between the above positions and substracting 12 bytes from the result (length field (4 bytes), chunk type field (4 bytes) and CEC field (4 bytes) are not counted to chunk length). The correct lengths are:
+    * To get the correct chunk data length, I counted the distance between subsequent chunks. This was easily done by counting the distance between the above positions and substracting 12 bytes from the result (length field (4 bytes), chunk type field (4 bytes) and CRC field (4 bytes) are not counted to chunk length). The correct lengths are:
       * IDAT 1: 16514 - 118 - 12 = 16384, converted to hex: 4000
       * IDAT 2: 32910 - 16514 - 12 = 16384, converted to hex: 4000
       * IDAT 3: 34829 - 32910 - 12 = 1907, converted to hex: 773
