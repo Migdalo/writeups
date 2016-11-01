@@ -20,19 +20,19 @@ grep /' test.rtf
 Next I had to clean the extra punctuation characters (/'). The tr command seemed like a good way to do this.
 
 ```
-grep /' test.rtf | tr -delete [:punct:]
+grep /' test.rtf | tr --delete [:punct:]
 ```
 
 I wanted to see if the PNG image is actually a viewable one, and whether it has the flag printed on it or not. However, due to the initial /'00 in the file, it was not yet possible to convert the hex string to a image. I removed those extra digits with cut command, and piped the result to xxd to convert the plain hexdump to binary.
 
 ```
-grep /' test.rtf | tr -delete [:punct:] | cut -c 3- | xxd -r -p >> task.png
+grep /' test.rtf | tr --delete [:punct:] | cut -c 3- | xxd -r -p >> task.png
 ```
 
 This resulted in a picture of Homer Sipmson, but no flag. I theorised that there might be another file hidden inside the PNG file. To find out if my guess was right, I decided to pipe the output of xxd to foremost. At this point the cut command became unnecessary, so I removed it. Leaving it in wouldn't have had any harm thought.
 
 ```
-grep /' test.rtf | tr -delete [:punct:] | xxd -r -p | foremost
+grep /' test.rtf | tr --delete [:punct:] | xxd -r -p | foremost
 ```
 
 Foremost found a zip file, which in turn contained a text file that cointained the flag. 
