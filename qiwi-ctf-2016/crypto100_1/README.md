@@ -19,7 +19,7 @@ The original square [according to Wikipedia](https://en.wikipedia.org/wiki/Polyb
 | **4** | q | r | s | t | u |
 | **5** | v | w | x | y | z |
 
-Each character is presented with two numbers. The first numbers shows the row and the second number shows the column of the character.
+Each character is presented with two numbers. The first number shows the row and the second number shows the column of the character.
 
 I wrote the following Python script to decipher the ciphertext:
 
