@@ -8,14 +8,14 @@
 
 > Download Link: https://drive.google.com/file/d/0B_AQp5s_S-khWjExSllLYjFRR0E/view?usp=sharing
 
-We were given 20 zip archives. I opened one of them to see what was inside, and discovered that the only content was a single text file. The file didn't have much in it.
+We were given 20 zip archives. I opened one of them to see what was inside, and discovered that the only content was a single text file. The file didn't have much in it:
 
 ```
 Coming to you live from QuarfBlaaaark 7, this is Montgomery Flaaaargendach with Live Forensic Files:  
 Raw Forensic Adventures.
 ```
 
-I wrote a Python script to find out what was inside the rest of archives.
+I wrote a Python script to find out what was inside the rest of the archives.
 
 ``` python
 import os, zipfile
@@ -31,9 +31,9 @@ for filename in os.listdir(directory):
 
 The script showed that each of the archives only had one text file in each of them. I then turned to the only other files available, which were the zip archives themselves. I opened a few of them in a hex editor. At the end of Chapter4.zip, I found a piece of text that looked like base64. It turned out to be base64 encoding of 'RC' (UkMK), which is the start of the flag.
 
- From the [zip file specification](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT) we can learn that the end of zip file field starts with bytes 0x06054g50 and is 22 bytes long. Also, all values are stored in little-endian byte order unless otherwise stated.
- 
 ![Hex-editor](https://github.com/Migdalo/writeups/blob/master/rc3-ctf-2016/breaking_news/zip_file_hex_editor.png)
+
+From the [zip file specification](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT) we can learn that the end of zip file field starts with bytes 0x06054g50 and is 22 bytes long. Also, all values are stored in little-endian byte order unless otherwise stated.
 
 I wrote a Python script that looks for the end of zip directory central record and prints out any data that appears after it.
 
