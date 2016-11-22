@@ -46,7 +46,7 @@ for filename in sorted(os.listdir(directory), cmp=lambda x, y: cmp(get_num(x), g
             if zipend == hexed[i:i+8]:
                 found = hexed[i + 22 * 2:]
                 if found:
-                    #flag.append(b64d(found.decode('hex')).strip())
+                    flag.append(b64d(found.decode('hex')).strip())
                     print found.decode('hex')
 ```
 
@@ -58,7 +58,7 @@ MTYtRFUK
 UkMK
 My0yMAo=
 ```
-I then decoded each of the base64 strings individually and appended them together to get the flag:
+After decoding each of the base64 strings, and appending them together, I got the flag:
 ```
 RC3-2016-DUKYFBLS
 ```
