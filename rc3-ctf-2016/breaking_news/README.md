@@ -31,7 +31,11 @@ for filename in os.listdir(directory):
 
 The script showed that each of the archives only had one text file in each of them. I then turned to the only other files available, which were the zip archives themselves. I opened a few of them in a hex editor. At the end of Chapter4.zip, I found a piece of text that looked like base64. It turned out to be base64 encoding of 'RC' (UkMK), which is the start of the flag.
 
-I wrote a Python script that looks for the end of zip directory central record and prints out any data that appears after it. From the [zip file specification](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT) we can learn that the end of zip file field starts with bytes 0x06054g50 and is 22 bytes long. Also, all values are stored in little-endian byte order unless otherwise stated.
+ From the [zip file specification](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT) we can learn that the end of zip file field starts with bytes 0x06054g50 and is 22 bytes long. Also, all values are stored in little-endian byte order unless otherwise stated.
+ 
+![Hex-editor](https://github.com/Migdalo/writeups/blob/master/rc3-ctf-2016/breaking_news/zip_file_hex_editor.png)
+
+I wrote a Python script that looks for the end of zip directory central record and prints out any data that appears after it.
 
 ``` python
 for filename in sorted(os.listdir(directory), cmp=lambda x, y: cmp(get_num(x), get_num(y))):
