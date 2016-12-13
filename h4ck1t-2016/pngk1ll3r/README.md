@@ -8,8 +8,8 @@ The file we got with the task is a png file. However, it can't be opened.
 About [PNG](https://www.w3.org/TR/PNG/) files:
 * The signature of PNG file is *89 50 4e 47 0d 0a 1a 0a*
 * PNG file consists of multiple chunks, some of which are compulsory and others that are optional
-* Each PNG chunk consists of length (4 bytes), chunk type (4 bytes), chunk data (the length field shows how many bytes this one has) and CRC (4 bytes)
-* The 32-bit CRC is calculated from the preceding bytes of the chunk, excluding the length field.
+* Each PNG chunk consists of fields: length (4 bytes), chunk type (4 bytes), chunk data (the length field shows how many bytes this one has) and CRC (4 bytes)
+* The 32-bit CRC is calculated from the preceeding bytes of the chunk, excluding the length field.
 
 I used the following steps to solve this challenge:
 
