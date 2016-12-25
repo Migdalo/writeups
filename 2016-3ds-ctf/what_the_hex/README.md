@@ -9,9 +9,11 @@ We were given a large text file named data. Its content was hex encoded. The fir
 ``` bash
 xxd -r -p data >> output
 ```
-Examing the binary in hex editor revealed that it didn't contain just one jpg file, but a lot of them. 3000 to be exact. Each of them was missing the start of jpg file signature. I extracted a couple of them manually to see what they looked like. They contained one line of text, that followed a pattern 3dsctf{<some_text_here>}. The flag should be 3DS{<some_text_here>}. It seemed likely that the flag was printed to one of the 3000 images
+Examing the binary in hex editor revealed that it didn't contain just one jpg file, but a lot of them. 3000 to be exact. Each of them was missing the start of jpg file signature. I extracted a couple of them manually to see what they looked like. They contained one line of text, that followed a pattern 3dsctf{<some_text_here>}. The flag should be 3DS{<some_text_here>}. 
 
-Next step was to separate the files. It's not necessary to save the files, storing them in a variable is enough. I used the following Python script to extract the files from the original text file and to correct their signatures:
+![Example of a false flag file](./false_flag.jpg)
+
+It seemed likely that the flag was printed to one of the 3000 images. Next step was to separate the files. It's not necessary to save the files, storing them in a variable is enough. I used the following Python script to extract the files from the original text file and to correct their signatures:
 
 ```python
 def extract_files(filename):
@@ -58,7 +60,11 @@ def read_text_from_image(content, filecount):
         return
 ```
 The script found the file from 2365th file.
+
+![The correct flag file](./flag2365.jpg)
+
+Tesseract recognized the flag as folloes:
 ```
 3DS{u_5hOuIdv3_7ried_tesseract}
 ```
-In the above flag 'I' is a capital 'i', and the 'O' is capital 'o'. In the image it seemed that the 'i' should be an 'l', and the 'o' should be 0. However, trying to return a flag with 'fixed' characters would prompt you about wrong flag. To get the flag right, it was necessary to type the flag exactly as Tesseract printed it, and not to try to fix characters that might seem to have been recognized wrong. 
+'I' is a capital 'i', and the 'O' is capital 'o'. In the image it seems that the 'i' should be an 'l', and the 'o' should be 0. However, trying to return a flag with 'fixed' characters would prompt you about wrong flag. To get the flag right, it was necessary to type the flag exactly as Tesseract printed it, and not to try to fix characters that might seem to have been recognized wrong. 
