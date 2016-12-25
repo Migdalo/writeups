@@ -42,7 +42,7 @@ def extract_files(filename):
                     return
 
 ```
-Next step was to find the correct one. I used [pytesseract](https://pypi.python.org/pypi/pytesseract/0.1) to text recognition. It's a python wrapper for [Tesseract-OCR](https://github.com/tesseract-ocr). To be able to pass the image data to pytesseract, the data need to be converted to PIL Image object. Because the image is in string string, it needs to be converted to a StringIO object before opening.
+Next step was to find the correct one. I used [pytesseract](https://pypi.python.org/pypi/pytesseract/0.1) for text recognition. It's a python wrapper for [Tesseract-OCR](https://github.com/tesseract-ocr). To be able to pass the image data to pytesseract, the data need to be converted to PIL Image object. Because the image is in a string, it must to be converted to a StringIO object before opening.
 
 ``` python
 def read_text_from_image(content, filecount):
@@ -59,7 +59,7 @@ def read_text_from_image(content, filecount):
     except IOError:
         return
 ```
-The script found the file from 2365th file.
+The script found the flag from 2365th file.
 
 ![The correct flag file](./flag2365.jpg)
 
@@ -67,4 +67,4 @@ Tesseract recognized the flag as folloes:
 ```
 3DS{u_5hOuIdv3_7ried_tesseract}
 ```
-'I' is a capital 'i', and the 'O' is capital 'o'. In the image it seems that the 'i' should be an 'l', and the 'o' should be 0. However, trying to return a flag with 'fixed' characters would prompt you about wrong flag. To get the flag right, it was necessary to type the flag exactly as Tesseract printed it, and not to try to fix characters that might seem to have been recognized wrong. 
+'I' is a capital 'i', and the 'O' is capital 'o'. In the image it seems that the 'i' should be an 'l', and the 'o' should be 0. However, trying to return a flag with 'fixed' characters prompted about wrong flag. To get the flag right, it was necessary to type the flag exactly as Tesseract printed it, and not to try to fix characters that might seem to have been recognized wrong. 
