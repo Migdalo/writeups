@@ -9,11 +9,11 @@ We were given a large text file named data. Its content was hex encoded. The fir
 ``` bash
 xxd -r -p data >> output
 ```
-Examing the binary in hex editor revealed that it didn't contain just one jpg file, but a lot of them. 3000 to be exact. Each of them was missing the start of jpg file signature. I extracted a couple of them manually to see what they looked like. They contained one line of text, that followed a pattern 3dsctf{<some_text_here>}. The flag should be 3DS{<some_text_here>}. 
+Examining the binary in hex editor revealed that it didn't contain just one jpg file, but a lot of them. 3000 to be exact. Each of them was missing the start of jpg file signature. I extracted a couple of them manually to see what they looked like. They contained one line of text, that followed a pattern 3dsctf{<some_text_here>}. The flag should be 3DS{<some_text_here>}. 
 
 ![Example of a false flag file](./false_flag.jpg)
 
-It seemed likely that the flag was printed to one of the 3000 images. Next step was to separate the files. It's not necessary to save the files, storing them in a variable is enough. I used the following Python script to extract the files from the original text file and to correct their signatures:
+It seemed likely that the flag was printed to one of the 3000 images. Next step was to read what was written in each file. It was not necessary to save the files, storing them in a variable one at a time was enough. I used the following Python script to extract each file from the original text file and to correct their signatures:
 
 ```python
 def extract_files(filename):
@@ -42,7 +42,7 @@ def extract_files(filename):
                     return
 
 ```
-Next step was to find the correct one. I used [pytesseract](https://pypi.python.org/pypi/pytesseract/0.1) for text recognition. It's a python wrapper for [Tesseract-OCR](https://github.com/tesseract-ocr). To be able to pass the image data to pytesseract, the data need to be converted to PIL Image object. Because the image is in a string, it must to be converted to a StringIO object before opening.
+I used [pytesseract](https://pypi.python.org/pypi/pytesseract/0.1) to read the flag from the images. It's a python wrapper for [Tesseract-OCR](https://github.com/tesseract-ocr). To be able to pass the image data to pytesseract, the data need to be converted to PIL Image object. Because in this case the image is in a string, it must first be converted to a StringIO object before opening.
 
 ``` python
 def read_text_from_image(content, filecount):
