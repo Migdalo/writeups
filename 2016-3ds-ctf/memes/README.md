@@ -6,7 +6,7 @@ Stego
 One member of the team told that is possible to improve the algorithm to make it impossible to retrieve the original message directly. So he hiden a message on this meme and gave to us to solve.<br>
 Prove the he's wrong!
 
-We were given a png file and a python script ([weakool.py](./weakool.py)). Reading the script revealed that the other CTF mentioned in the task description was probably HackIt 2016, cause I could remember a couple of tasks from there that were similar to this one. The idea basically is to color a pixel using a decimal presentation of a character from the flag and the coordinates of the next pixel you want to color as RGB values. The script in this task differs from HackIts scripts in its use of random numbers.
+We were given a png file and a python script ([weakool.py](./weakool.py)). I can remember a couple of tasks from another ctf that were similar to this one. The idea basically is to color one pixel for each character in the flag. The color of each pixel is defined as RGB values. The three numbers used are an integer presentation of the character you want to decode and coordinates of the next pixel you want to color. The script in this task differs from the other ctf scripts in the way it uses random numbers.
 
 To decrypt the flag we need to read the pixels in the correct order. The starting pixel is known, but offset and the order of r, g and b in the pixel colors are not. However, there aren't that many options so they can be brute-forced.
 
