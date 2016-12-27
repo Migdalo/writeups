@@ -63,7 +63,7 @@ The script found the flag from 2365th file.
 
 ![The correct flag file](./flag2365.jpg)
 
-Tesseract recognized the flag as folloes:
+Tesseract recognized the flag like this:
 ```
 3DS{u_5hOuIdv3_7ried_tesseract}
 ```
