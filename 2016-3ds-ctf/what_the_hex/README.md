@@ -46,14 +46,12 @@ I used [pytesseract](https://pypi.python.org/pypi/pytesseract/0.1) to read the f
 
 ``` python
 def read_text_from_image(content, filecount):
-    count = 0
     try:
         img = Image.open(StringIO(content.decode('hex')))
         img_text = pytesseract.image_to_string(img, \
             config='-psm 6')
         if img_text[:4] == '3DS{':
             print filecount, img_text
-        count -= 1
     except KeyboardInterrupt as key:
         sys.exit()
     except IOError:
