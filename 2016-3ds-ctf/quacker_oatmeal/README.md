@@ -5,7 +5,7 @@ Forensics 300
 We are sure that's a flag hidden.
 PS: This file has been extracted from a very weird USB flash drive. 
 
-We were given a binary file. Strings and file commands failed to provide any information at all. Viewing the binary in hex editor didn't help either. The name of this challenge seemed weird, so I assumed that it's a hint and continued by making a web search with search termis 'QUACKer usb'. This lead me to [USB Rubber Ducky](http://usbrubberducky.com/). 
+We were given a binary file. 'Strings' and 'file' commands failed to provide any information at all. Viewing the binary in hex editor didn't help either. The name of this challenge seemed weird, so I assumed that it's a hint and continued by making a web search with search terms 'QUACKer usb'. This lead me to [USB Rubber Ducky](http://usbrubberducky.com/). 
 
 To find out whether the file really was from Ducky, I tried to decode it with an online decoder ([Duckytoolkit Decoder](https://ducktoolkit.com/decoder/)). Decoding the binary worked and revealed a text file. Along with some other strings, the text file included the following command.
 
