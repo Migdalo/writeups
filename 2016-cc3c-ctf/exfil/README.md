@@ -4,7 +4,7 @@ Forensics 100
 > We hired somebody to gather intelligence on an enemy party. But apparently they managed to lose the secret document they extracted. They just sent us this and said we should be able to recover everything we need from it.
 Can you help?
 
-As part of this task we were given a [server.py](./server.py) file and a [pcap file]('./dump.pcap'). The pcap file contained dns traffic between two parties. 
+As part of this task we were given a [server.py](./server.py) file and a [pcap file](./dump.pcap). The pcap file contained dns traffic between two parties. 
 
 ## Find relevant data
 From the server.py file we can see that the server reads data from qname field and sends it in rdata field. 
@@ -95,7 +95,7 @@ gpg:   secret keys imported: 1
 ```
 
 ## PGP keys
-To find the missing PGP key, I read the content of the rdata field. Using the same code as above, with the exception of using pkt.an.rdata instead of pkt.qd.qname as a parameter for parse_content() function, we can get both the [public]('./public.key') and [private PGP keys]('./private.key'). The full solution code is at [solve.py]('./solve.py').
+To find the missing PGP key, I read the content of the rdata field. Using the same code as above, with the exception of using pkt.an.rdata instead of pkt.qd.qname as a parameter for parse_content() function, we can get both the [public](./public.key) and [private PGP keys](./private.key). The full solution code is at [solve.py](./solve.py).
 
 ## The flag
 Now that we have both the encrypted file and the private key, we can decrypt the file and get the flag.
