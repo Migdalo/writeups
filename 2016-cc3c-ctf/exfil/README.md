@@ -35,7 +35,7 @@ From the server.py script we can see that the server adds domain name 'eat-sleep
 ```
 python test.py | grep -i eat-sleep-pwn-repeat.de
 ```
-From the output we can see how Scapy parses packets.
+From the output we can see that qname field will most likely be found from qd.qname and rdata from an.rdata.
 ```
 qd         : DNSQRField = <DNSQR  qname='G4JQYH5ICU.eat-sleep-pwn-repeat.de.' qtype=A qclass=IN |> (None)
 an         : DNSRRField = <DNSRR  rrname='eat-sleep-pwn-repeat.de.' type=CNAME rclass=IN ttl=0 rdata='G4J2QFIMD5SXQ2LUBI.eat-sleep-pwn-repeat.de.' |> (None)
@@ -53,7 +53,7 @@ def parse_content(name):
 ```
 
 ## Encrypted file
-I wrote the following script to print out and decode the content of qd.qname field.
+Next step was to read and parse the content of all the relevant fields. I wrote the following script to print out and decode the content of qd.qname field.
 ``` python
 from __future__ import print_function
 from scapy.all import *
@@ -72,7 +72,7 @@ with PcapReader('dump.pcap') as pcap:
                 printed.append(qd_result_orig)
 ```
 
-From the output we can see that there is a file being transfered. Its name 'secret.docx.gpg' implies that the file is encrypted.
+From the output we can see that there is a file being transfered. The name of the file is 'secret.docx.gpg' which implies that the file is encrypted with PGP.
 
 ```
 2631222 -rw-rw-r-- 1 fpetry fpetry 4.4K Dec 17 13:31 secret.docx.gpg
