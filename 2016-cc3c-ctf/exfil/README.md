@@ -41,7 +41,7 @@ qd         : DNSQRField = <DNSQR  qname='G4JQYH5ICU.eat-sleep-pwn-repeat.de.' qt
 an         : DNSRRField = <DNSRR  rrname='eat-sleep-pwn-repeat.de.' type=CNAME rclass=IN ttl=0 rdata='G4J2QFIMD5SXQ2LUBI.eat-sleep-pwn-repeat.de.' |> (None)
 ```
 
-We need to parse the fields by removing the domain name, and then decode them from base32. We can use the decode32 function from server.py to handle the deconding part. I wrote the following function to parse the names:
+We need to parse the fields by removing the domain name, and then decode them from base32. We can use the decode_b32 function from server.py to handle the deconding part. I wrote the following function to parse the names:
 ```python
 def parse_content(name):
     try:
