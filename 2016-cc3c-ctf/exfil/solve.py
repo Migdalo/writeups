@@ -9,7 +9,8 @@ def list_packets_scapy():
         for p in pcap:
             pkt = p.payload
             print(ls(pkt))
- 
+
+# decode_b32 is from server.py file
 def decode_b32(s):
     s = s.upper()
     for i in range(10):
