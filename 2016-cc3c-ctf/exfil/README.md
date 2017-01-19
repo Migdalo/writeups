@@ -22,7 +22,7 @@ def datagram_received(self, data, addr):
 
     self.transport.sendto(response.pack(), addr)
 ```
-I used [Scapy](https://github.com/secdev/scapy) to solve this task, so I wanted to know how Scapy handels DNS packets. For this reason, I wrote a short script to find the relevant fields.
+In the server file, dnslib was used to handle DNS connections. However, I used [Scapy](https://github.com/secdev/scapy) to solve this task, so I needed to know how Scapy handels DNS packets. For this reason, I wrote a short script to find the relevant fields.
 ``` python
 from scapy.all import *
 
@@ -33,7 +33,7 @@ for p in pcap:
 ```
 From the server.py script we can see that the server adds domain name 'eat-sleep-pwn-repeat.de' to every message. We can use it as a search term.
 ```
-python test.py | grep -i eat-sleep-pwn-repeat.de
+example@example:~$ python test.py | grep -i eat-sleep-pwn-repeat.de
 ```
 From the output we can see that qname field will most likely be found from qd.qname and rdata from an.rdata.
 ```
@@ -41,7 +41,7 @@ qd         : DNSQRField = <DNSQR  qname='G4JQYH5ICU.eat-sleep-pwn-repeat.de.' qt
 an         : DNSRRField = <DNSRR  rrname='eat-sleep-pwn-repeat.de.' type=CNAME rclass=IN ttl=0 rdata='G4J2QFIMD5SXQ2LUBI.eat-sleep-pwn-repeat.de.' |> (None)
 ```
 
-We need to parse the fields by removing the domain name, and then decode them from base32. We can use the decode_b32 function from server.py to handle the deconding part. I wrote the following function to parse the names:
+We needed to parse the fields by removing the domain name, and then decode the content of the fields from base32. The deconding part could be done by reusing the decode_b32 function from server.py. I wrote the following function to parse the names:
 ```python
 def parse_content(name):
     try:
@@ -52,24 +52,41 @@ def parse_content(name):
         return None
 ```
 
-## Encrypted file
-Next step was to read and parse the content of all the relevant fields. I wrote the following script to print out and decode the content of qd.qname field.
+## Encrypted file and PGP key
+Next step was to read and parse the content of all the relevant fields. The packets are sent multiple times so we need to make sure we don't include the same packet more than once. I used a simple buffer with a length of 10 to handle the repeating packets. In this case it proved to be accurate enough solution.
+
+I wrote the following function to print out and decode the relevant content.
 ``` python
 from __future__ import print_function
 from scapy.all import *
 
-with PcapReader('dump.pcap') as pcap:
-    for p in pcap:
-        pkt = p.payload
-        try:
-            qd_result_orig = parse_content(pkt.qd.qname) 
-        except:
-            qd_result_orig = None
-        if qd_result_orig:
-            qd_result = qd_result_orig[6:]
-            if qd_result and qd_result_orig not in printed:
-                print(qd_result, end='')
-                printed.append(qd_result_orig)
+filename = 'secret.docx.gpg'
+
+def process_dns_field(field, buffer, f=None):
+    result_orig = parse_content(field) 
+    if result_orig:
+        result = result_orig[6:]
+        if result and result_orig not in buffer:
+            print(result, end='')
+            buffer.append(result_orig)
+            if len(buffer) > 10:
+                buffer.pop(0)
+
+def read_data():
+    with PcapReader('dump.pcap') as pcap:
+        printed = []
+        f = open(filename, 'wb')
+        f.close()
+        for p in pcap:
+            pkt = p.payload
+            try:
+                process_dns_field(pkt.qd.qname, printed, f)
+            except AttributeError:
+                pass # Sometimes pkt.qd.qname doesn't exist
+            try:
+                process_dns_field(pkt.an.rdata, printed)
+            except AttributeError:
+                pass # Sometimes pkt.an.rdata doesn't exist
 ```
 
 From the output we can see that there is a file being transfered. The name of the file is 'secret.docx.gpg' which implies that the file is encrypted with PGP.
@@ -82,26 +99,26 @@ START_OF_FILE�
                    [truncated for readability] 
 ... ��S��?7\b�f	�KVj�::@�1d����"<0�f%Ybo�R��&ݲ�b�(.��O1<��r���8�ѫEf�H��0ʟ�=END_OF_FILE
 ```
-The output also reveals that there should be a PGP key somewhere.
+                        
+The output also reveals both the [public](./public.key) and [private PGP keys](./private.key). The keys are hex encoded, so could be simply copied from the output and saved to a file. However, the file is transfered in binary mode, therefore it's better to save it programmatically. To do this, I added the following code inside the 'if result and result_orig not in buffer:' clause inside the process_dns_field() function.
+```python
+if result.startswith('START_OF_FILE'):
+    f = open(filename, 'ab')
+    f.write(result.replace('START_OF_FILE', ''))
+elif not f.closed:
+    if 'END_OF_FILE' in result:
+        f.write(result.rstrip().replace('END_OF_FILE', ''))
+        f.close()
+    else:
+        f.write(result)
 ```
-gpg: key D0D8161F: public key "operator from hell <team@kitctf.de>" imported
-gpg: key D0D8161F: secret key imported
-gpg: key D0D8161F: "operator from hell <team@kitctf.de>" not changed
-gpg: Total number processed: 2
-gpg:               imported: 1  (RSA: 1)
-gpg:              unchanged: 1
-gpg:       secret keys read: 1
-gpg:   secret keys imported: 1
-```
-
-## PGP keys
-To find the missing PGP key, I read the content of the rdata field. Using the same code as above, with the exception of using pkt.an.rdata instead of pkt.qd.qname as a parameter for parse_content() function, we can get both the [public](./public.key) and [private PGP keys](./private.key). The full solution code is at [solve.py](./solve.py).
+The full solution code is at [solve.py](./solve.py).
 
 ## The flag
 Now that we have both the encrypted file and the private key, we can decrypt the file and get the flag.
 ```
-gpg --import private.key
-gpg --decrypt secret.docx.gpg >> secret.docx
+example@example:~$ gpg --import private.key
+example@example:~$ gpg --decrypt secret.docx.gpg >> secret.docx
 ```
 
 The decrypted file contained two lines of text. The second line was the flag.
