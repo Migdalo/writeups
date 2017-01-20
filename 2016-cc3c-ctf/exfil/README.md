@@ -60,8 +60,6 @@ I wrote the following function to print out and decode the relevant content.
 from __future__ import print_function
 from scapy.all import *
 
-filename = 'secret.docx.gpg'
-
 def process_dns_field(field, buffer, f=None):
     result_orig = parse_content(field) 
     if result_orig:
@@ -75,8 +73,6 @@ def process_dns_field(field, buffer, f=None):
 def read_data():
     with PcapReader('dump.pcap') as pcap:
         printed = []
-        f = open(filename, 'wb')
-        f.close()
         for p in pcap:
             pkt = p.payload
             try:
@@ -102,6 +98,8 @@ START_OF_FILE�
                         
 The output also reveals both the [public](./public.key) and [private PGP keys](./private.key). The keys are hex encoded, so could be simply copied from the output and saved to a file. However, the file is transfered in binary mode, therefore it's better to save it programmatically. To do this, I added the following code inside the 'if result and result_orig not in buffer:' clause inside the process_dns_field() function.
 ```python
+filename = 'secret.docx.gpg'
+
 if result.startswith('START_OF_FILE'):
     f = open(filename, 'ab')
     f.write(result.replace('START_OF_FILE', ''))
