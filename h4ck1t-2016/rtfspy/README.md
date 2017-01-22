@@ -29,7 +29,7 @@ I wanted to see if the PNG image is actually a viewable one, and whether it has 
 grep /' test.rtf | tr --delete [:punct:] | cut -c 3- | xxd -r -p >> task.png
 ```
 
-This resulted in a picture of Homer Sipmson, but no flag. I theorised that there might be another file hidden inside the PNG file. To find out if my guess was right, I decided to pipe the output of xxd to foremost. At this point the cut command became unnecessary, so I removed it. Leaving it in wouldn't have had any harm thought.
+This resulted in a picture of Homer Simpson, but no flag. I theorised that there might be another file hidden inside the PNG file. To find out if my guess was right, I decided to pipe the output of xxd to foremost. At this point the cut command became unnecessary, so I removed it. Leaving it in wouldn't have had any harm thought.
 
 ```
 grep /' test.rtf | tr --delete [:punct:] | xxd -r -p | foremost
