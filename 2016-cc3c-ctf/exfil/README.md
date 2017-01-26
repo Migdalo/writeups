@@ -60,7 +60,7 @@ I wrote the following function to print out and decode the relevant content.
 from __future__ import print_function
 from scapy.all import *
 
-def process_dns_field(field, buffer, f=None):
+def process_dns_field(field, buffer):
     result_orig = parse_content(field) 
     if result_orig:
         result = result_orig[6:]
@@ -76,7 +76,7 @@ def read_data():
         for p in pcap:
             pkt = p.payload
             try:
-                process_dns_field(pkt.qd.qname, printed, f)
+                process_dns_field(pkt.qd.qname, printed)
             except AttributeError:
                 pass # Sometimes pkt.qd.qname doesn't exist
             try:
