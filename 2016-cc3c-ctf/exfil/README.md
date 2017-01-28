@@ -96,7 +96,7 @@ START_OF_FILE�
 ... ��S��?7\b�f	�KVj�::@�1d����"<0�f%Ybo�R��&ݲ�b�(.��O1<��r���8�ѫEf�H��0ʟ�=END_OF_FILE
 ```
                         
-The output also reveals both the [public](./public.key) and [private PGP keys](./private.key). The keys are hex encoded, so could be simply copied from the output and saved to a file. However, the file is transfered in binary mode, therefore it's better to save it programmatically. To do this, I added the following code inside the 'if result and result_orig not in buffer:' clause inside the process_dns_field() function.
+The output also reveals both the [public](./public.key) and [private PGP keys](./private.key). The keys are hex encoded, so they could be simply copied from the output and saved to a file. The file however, is transfered in binary mode, therefore it's better to save it programmatically. To do this, I added the following code inside the 'if result and result_orig not in buffer:' clause inside the process_dns_field() function.
 ```python
 filename = 'secret.docx.gpg'
 
