@@ -6,7 +6,7 @@ Web, 260 points
 
 Behind the link was a site with a single link to a qr image.
 
-![Example qr code image](./qrcode.png)
+![Example qr code image](./KjZqZwwKROwxELfzz6fN.png)
 
 The qr image contained a string that was similiar to the previous qr code filename. Appending the string to http://tunnel.web.easyctf.com/ revealed another qr code. This pattern seemed to continue so, I wrote a python script to read each of the qr codes. I used [qrtools](https://github.com/primetang/qrtools) to read the qr codes, and StringIO to avoid having to save any of the qr images to a hard drive. For retrieving the qr codes from the web, I used a subprocess call to curl. 
 
