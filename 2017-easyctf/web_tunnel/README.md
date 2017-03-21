@@ -25,9 +25,8 @@ qr = qrtools.QR()
 start = subprocess.check_output(['curl', '-q', url_prefix])
 start = ''.join(start.split(
     '<a href=')[-1:]).split('>here</a>')[0].replace('\'', '')
-current_file = start.split('/')[1]
 url_prefix += start.split('/')[0] + '/'
-filename = current_file
+filename = start.split('/')[1]
 
 while True:
     # Read all the qr codes
@@ -39,9 +38,8 @@ while True:
         qr.decode(qr_io)
     except IOError:
         sys.exit()
-    current_file = qr.data
     time.sleep(1)
-    filename = current_file + url_suffix
+    filename = qr.data + url_suffix
 ```
 
 The flag was: easyctf{w0w_y0u_reached_th3_3nd_0f_my_tunnel!!!!!}
