@@ -26,8 +26,7 @@ I used the following steps to solve this challenge:
       * IDAT 1: 16514 - 118 - 12 = 16384, converted to hex: 4000
       * IDAT 2: 32910 - 16514 - 12 = 16384, converted to hex: 4000
       * IDAT 3: 34829 - 32910 - 12 = 1907, converted to hex: 773
-      
-    I then corrected the data chunk lengths of the first and second IDAT chunk to 4000 and the data chunk length of the third IDAT chunk to 773.
+    * I corrected the data chunk lengths of the first and second IDAT chunk to 4000 and the data chunk length of the third IDAT chunk to 773.
 
 3. The only CRC error left at this point was in IHDR chunk. By looking at pngcheck output I could see that the size of the image itself was set to 13x37. There was that '1337' again. Pngcheck told me that the expected CRC of IHDR field was 441f81d8. I assumed that the CRC is correct. Therefore, the correct width and length of the image would be those that produce the expected CRC. I used a short brute-force script to find the correct image size: 551 x 196. After correcting the width and height, I was able to open the file and get the flag.
 
