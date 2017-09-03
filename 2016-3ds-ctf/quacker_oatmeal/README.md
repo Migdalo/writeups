@@ -15,5 +15,3 @@ The base64 encoded string will decode to:
 > https://3dsctf.org/55a3cb7673f79788dd8bb77021876983/63df631a63571c49077cb71e601e2dbe113900f2e6fd841609f21fa84e3e6f9f.png
 
 Behind the link was a png image that contained the flag. The flag was 3DS{3ubb3r_Duc|<_wi7h_Fl46s}.
-
-![Rubber Ducky flag](./flag.png)
