@@ -1,6 +1,6 @@
 # Threat 2
 
-As part of this challenge we were given 56 executable files and the following instructions:
+As part of this challenge we were given 56 executable files and following instructions:
 
 ```
 netcat your answer to 52.42.81.161:8082
@@ -40,7 +40,7 @@ Hint:
 There are 308 wildcard "?"'s within the answer
 ```
 
-The file sizes varied from 96.3 kB to 693.0 kB, but some of the files were of the same size. I compared some of these files against each other in a hex editor and noticed that large parts of those files were the same or very similiar to the other same sized files. I tried converting the files to hex and comparing them to all the other files that had the same filesize. I replaced the differing hex characters with question marks. 
+The file sizes varied from 96.3 kB to 693.0 kB, but some of the files were of the same size. I compared some of the files with a same file size against each other in a hex editor and noticed that large parts of those files were the same, or very similiar to each other. I tried converting the files to hex and comparing them to all the other files that had the same file size. I replaced the differing hex characters with question marks. 
 
 ``` python
 import os
@@ -93,7 +93,7 @@ if not os.path.exists(tmp_path):
 start(tmp_path)
 ```
 
-This reduced the number of files from 56 down to 24. The highest count of files with the same file size was six. Because the rule  cannot fire on any other samples, it's save to ignore long sequences of zeros and question marks.
+This reduced the number of files from 56 down to 24. The highest count of files with the same file size was six. Because the rule cannot fire on any other samples, it was save to ignore long sequences of zeros and question marks.
 
 ``` python
 def find_index(path, files):
