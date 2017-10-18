@@ -32,7 +32,7 @@ yahoo�:iK9KjFcBnikAAAAqAAAACAAYAAAAAAABcom
 reddit�;Gll1eAsAAQToAwAABOgDAABQSwUGAAAAcom  
 google�/AAEAAQBOAAAAawAAAAAAcoin
 
-These looked like encoded domain names. More information about them is available here: [Domain names - Implementation and specification](https://tools.ietf.org/html/rfc1035). The domain names seem follow a pattern: number of characters, characters, pointer to the next number of characters, base64 encoded string, number of characters, characters and finally a terminator. The last domain name has a second sequence of number of characters and characters before the terminator.
+These looked like encoded domain names. More information about them is available here: [Domain names - Implementation and specification](https://tools.ietf.org/html/rfc1035). The domain names seemed to follow a pattern: number of characters, characters, pointer to the next number of characters, base64 encoded string, number of characters, characters and finally a terminator. The last domain name had a second sequence of number of characters and characters before the terminator.
 
 Finally, I wrote the following code to extract the base64 encoded parts from the packets, append them together and decode the result. The decoded result looked like a zip file so, I saved it to a file.
 
