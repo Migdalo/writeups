@@ -17,13 +17,13 @@ Since none of the other lines besides the hex line had anything useful in them, 
 grep \' test.rtf
 ```
 
-Next I had to clean the extra punctuation characters (/'). The tr command seemed like a good way to do this.
+Next I had to clean the extra punctuation characters (\\'). The tr command seemed like a good way to do this.
 
 ```
 rep \' test.rtf | tr --delete [:punct:]
 ```
 
-I wanted to see if the PNG image is actually a viewable one, and whether it has the flag printed on it or not. However, due to the initial /'00 in the file, it was not yet possible to convert the hex string to a image. I removed those extra digits with cut command, and piped the result to xxd to convert the plain hexdump to binary.
+I wanted to see if the PNG image is actually a viewable one, and whether it has the flag printed on it or not. However, due to the initial \\'00 in the file, it was not yet possible to convert the hex string to a image. I removed those extra digits with cut command, and piped the result to xxd to convert the plain hexdump to binary.
 
 ```
 rep \' test.rtf  | tr --delete [:punct:] | cut -c 3- | xxd -r -p >> task.png
